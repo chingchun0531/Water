@@ -1,5 +1,6 @@
 package com.fju.water;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -13,6 +14,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,8 +26,8 @@ EditText edNext;
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        edMonth=findViewById(R.id.month);
-        edNext=findViewById(R.id.next);
+        edMonth = findViewById(R.id.month);
+        edNext = findViewById(R.id.next);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -35,72 +37,59 @@ EditText edNext;
                         .setAction("Action", null).show();
             }
         });
-    }
-    public void result(View view) {
-            float number = Float.parseFloat(edMonth.getText().toString());
-            if (0 < number && number < 11) {
-                double money = 7.35 * number;
-                new AlertDialog.Builder(this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用:" + money)
-                        .setPositiveButton("OK", null)
-                        .show();
-            } else if (10 < number && number < 31) {
-                double money = (9.45 * number) - 21;
-                new AlertDialog.Builder(this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用:" + money)
-                        .setPositiveButton("OK", null)
-                        .show();
-            } else if (30 < number && number < 51) {
-                double money = (11.55 * number) - 84;
-                new AlertDialog.Builder(this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用:" + money)
-                        .setPositiveButton("OK", null)
-                        .show();
-            } else {
-                double money = (12.075 * number) - 220.5;
-                new AlertDialog.Builder(this)
-                        .setTitle("每月抄表費用")
-                        .setMessage("費用:" + money)
-                        .setPositiveButton("OK", null)
-                        .show();
 
-                if (!TextUtils.isEmpty(edNext.getText().toString())) {
-                    float number2 = Float.parseFloat(edNext.getText().toString());
-                    if (0 < number2 && number2 < 21) {
-                        double money2 = 7.35 * number2;
-                        new AlertDialog.Builder(this)
-                                .setTitle("隔月抄表費用")
-                                .setMessage("費用:" + money2)
-                                .setPositiveButton("OK", null)
-                                .show();
-                    } else if (20 < number2 && number2 < 61) {
-                        double money2 = (9.45 * number2) - 21;
-                        new AlertDialog.Builder(this)
-                                .setTitle("隔月抄表費用")
-                                .setMessage("費用:" + money2)
-                                .setPositiveButton("OK", null)
-                                .show();
-                    } else if (60 < number2 && number2 < 101) {
-                        double money2 = (11.55 * number2) - 84;
-                        new AlertDialog.Builder(this)
-                                .setTitle("隔月抄表費用")
-                                .setMessage("費用:" + money2)
-                                .setPositiveButton("OK", null)
-                                .show();
+        Button button = findViewById(R.id.button2);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!TextUtils.isEmpty(edMonth.getText().toString())) {
+                    float number = Float.parseFloat(edMonth.getText().toString());
+                    if (0 < number && number < 11) {
+                        double money = 7.35 * number;
+                    } else if (10 < number && number < 31) {
+                        double money = (9.45 * number) - 21;
+                    } else if (30 < number && number < 51) {
+                        double money = (11.55 * number) - 84;
                     } else {
-                        double money2 = (12.075 * number2) - 220.5;
-                        new AlertDialog.Builder(this)
-                                .setTitle("隔月抄表費用")
-                                .setMessage("費用:" + money2)
+                        double money = (12.075 * number) - 220.5;
+                        /* new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("每月抄表費用")
+                                .setMessage("費用:" + money)
                                 .setPositiveButton("OK", null)
                                 .show();
+                                  */
+                    }
+                    Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                    startActivity(intent);
+                }else{
+                    if (!TextUtils.isEmpty(edNext.getText().toString())) {
+                        float number2 = Float.parseFloat(edNext.getText().toString());
+                        if (0 < number2 && number2 < 21) {
+                            double money2 = 7.35 * number2;
+                        } else if (20 < number2 && number2 < 61) {
+                            double money2 = (9.45 * number2) - 21;
+                        } else if (60 < number2 && number2 < 101) {
+                            double money2 = (11.55 * number2) - 84;
+                        } else {
+                            double money2 = (12.075 * number2) - 220.5;
+                            /*new AlertDialog.Builder(MainActivity.this)
+                                    .setTitle("隔月抄表費用")
+                                    .setMessage("費用:" + money2)
+                                    .setPositiveButton("OK", null)
+                                    .show();
+                             */
+                        }
+                        Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                        startActivity(intent);
                     }
                 }
+
             }
-                    }
+        });
+    }
+    public void result(View view) {
+
+        }
 
 
 
