@@ -43,35 +43,38 @@ EditText edNext;
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(edMonth.getText().toString())) {
-                    float number = Float.parseFloat(edMonth.getText().toString());
-                    if (0 < number && number < 11) {
-                        double money = 7.35 * number;
-                    } else if (10 < number && number < 31) {
-                        double money = (9.45 * number) - 21;
-                    } else if (30 < number && number < 51) {
-                        double money = (11.55 * number) - 84;
+                    float degree = Float.parseFloat(edMonth.getText().toString());
+                    float fee = 0;
+                    if (0 < degree && degree < 11) {
+                        fee = 7.35f * degree;
+                    } else if (10 < degree && degree < 31) {
+                        fee = (9.45f *degree) - 21;
+                    } else if (30 < degree && degree < 51) {
+                        fee = (11.55f *degree) - 84;
                     } else {
-                        double money = (12.075 * number) - 220.5;
+                        fee = (12.075f * degree) - 220.5f;
                         /* new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("每月抄表費用")
-                                .setMessage("費用:" + money)
+                                .setMessage("費用:" +num)
                                 .setPositiveButton("OK", null)
                                 .show();
                                   */
                     }
                     Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                    intent.putExtra("FEE",fee);
                     startActivity(intent);
                 }else{
                     if (!TextUtils.isEmpty(edNext.getText().toString())) {
-                        float number2 = Float.parseFloat(edNext.getText().toString());
-                        if (0 < number2 && number2 < 21) {
-                            double money2 = 7.35 * number2;
-                        } else if (20 < number2 && number2 < 61) {
-                            double money2 = (9.45 * number2) - 21;
-                        } else if (60 < number2 && number2 < 101) {
-                            double money2 = (11.55 * number2) - 84;
+                        float degree = Float.parseFloat(edNext.getText().toString());
+                        float fee = 0;
+                        if (0 < degree && degree < 21) {
+                            fee = 7.35f * degree;
+                        } else if (20 < degree && degree < 61) {
+                           fee = (9.45f * degree) - 21;
+                        } else if (60 < degree && degree < 101) {
+                           fee = (11.55f * degree) - 84;
                         } else {
-                            double money2 = (12.075 * number2) - 220.5;
+                            fee = (12.075f * degree) - 220.5f;
                             /*new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("隔月抄表費用")
                                     .setMessage("費用:" + money2)
@@ -80,6 +83,7 @@ EditText edNext;
                              */
                         }
                         Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                        intent.putExtra("FEE",fee);
                         startActivity(intent);
                     }
                 }
