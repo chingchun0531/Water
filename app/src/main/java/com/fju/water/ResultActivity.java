@@ -1,41 +1,23 @@
 package com.fju.water;
 
-import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
+import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.TextView;
 
 public class ResultActivity extends AppCompatActivity {
+    private static final String TAG = ResultActivity.class.getSimpleName();
+    private static final float DEFAULT_FEE = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        float fee = getIntent().getFloatExtra("FEE",-1);
-        Log.d("Result","fee"+fee);
+        float fee = getIntent().getFloatExtra(getString(R.string.extra_fee),DEFAULT_FEE);
+        Log.d(TAG,fee + "");
         TextView feeText = findViewById(R.id.fee);
+        int n =(int)(fee + 0.5f);
         feeText.setText(fee + " ");
-
-
-
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
-
 }

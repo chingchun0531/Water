@@ -6,7 +6,6 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -15,11 +14,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 EditText edMonth;
-EditText edNext;
+boolean isNext = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +30,7 @@ EditText edNext;
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         edMonth = findViewById(R.id.month);
-        edNext = findViewById(R.id.next);
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -42,6 +45,15 @@ EditText edNext;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Switch sw =findViewById(R.id.sw);
+                sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        isNext = isChecked;
+                        TextView text = findViewById(R.id.type);
+                        text.setText(isNext ? getString(R.string.every_other_month): getString(R.string.monthly));
+                    }
+                });
                 if (!TextUtils.isEmpty(edMonth.getText().toString())) {
                     float degree = Float.parseFloat(edMonth.getText().toString());
                     float fee = 0;
@@ -53,51 +65,44 @@ EditText edNext;
                         fee = (11.55f *degree) - 84;
                     } else {
                         fee = (12.075f * degree) - 220.5f;
-                        /* new AlertDialog.Builder(MainActivity.this)
+                         /*new AlertDialog.Builder(MainActivity.this)
                                 .setTitle("每月抄表費用")
-                                .setMessage("費用:" +num)
-                                .setPositiveButton("OK", null)
+                                .setMessage(getString(R.string.fee) +fee)
+                                .setPositiveButton(getString(R.string.ok), null)
                                 .show();
-                                  */
+                          */
                     }
-                    Intent intent = new Intent(MainActivity.this,ResultActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ResultActivity.class);
                     intent.putExtra("FEE",fee);
                     startActivity(intent);
-                }else{
+                }
+                /*else{
                     if (!TextUtils.isEmpty(edNext.getText().toString())) {
                         float degree = Float.parseFloat(edNext.getText().toString());
                         float fee = 0;
                         if (0 < degree && degree < 21) {
                             fee = 7.35f * degree;
                         } else if (20 < degree && degree < 61) {
-                           fee = (9.45f * degree) - 21;
+                            fee = (9.45f * degree) - 21;
                         } else if (60 < degree && degree < 101) {
-                           fee = (11.55f * degree) - 84;
+                            fee = (11.55f * degree) - 84;
                         } else {
                             fee = (12.075f * degree) - 220.5f;
-                            /*new AlertDialog.Builder(MainActivity.this)
+                            new AlertDialog.Builder(MainActivity.this)
                                     .setTitle("隔月抄表費用")
                                     .setMessage("費用:" + money2)
                                     .setPositiveButton("OK", null)
                                     .show();
-                             */
                         }
                         Intent intent = new Intent(MainActivity.this,ResultActivity.class);
                         intent.putExtra("FEE",fee);
                         startActivity(intent);
                     }
                 }
-
+                */
             }
         });
     }
-    public void result(View view) {
-
-        }
-
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
