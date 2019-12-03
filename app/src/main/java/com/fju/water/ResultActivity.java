@@ -18,6 +18,6 @@ public class ResultActivity extends AppCompatActivity {
         Log.d(TAG,fee + "");
         TextView feeText = findViewById(R.id.fee);
         int n =(int)(fee + 0.5f);
-        feeText.setText(fee + " ");
+        feeText.setText(n + " ");
     }
 }
